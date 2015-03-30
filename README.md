@@ -5,6 +5,10 @@ Video of first example test can be downloaded here:
 
 https://www.dropbox.com/s/2iimtorsgwvh3hn/flip_usb_cam.mov?dl=0
 
+Preparing git following this guide
+
+http://stackoverflow.com/questions/21573405/how-to-prepare-a-unity-project-for-git
+
 Workflow to Date
 
 => 3D scan
