@@ -2,6 +2,7 @@
 A look at the workflow for early stage Augmented Reality experiments using Mixamo, Unity, and the Vuforia Toolkit.
 
 Video of first example test can be downloaded here:
+
 https://www.dropbox.com/s/2iimtorsgwvh3hn/flip_usb_cam.mov?dl=0
 
 Workflow to Date
