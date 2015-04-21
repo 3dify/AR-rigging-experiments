@@ -1,0 +1,186 @@
+2015-04-21 15:24:37.424 Unity[32172:1044083] NSDocumentController Info.plist warning: The values of CFBundleTypeRole entries must be 'Editor', 'Viewer', 'None', or 'Shell'.
+debugger-agent: Unable to listen on 6
+ations/Unity 4.6/Unity.app/Contents/Frameworks/Mono/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,defer=y
+
+LICENSE SYSTEM [2015421 15:24:37] Next license update check is after 2015-04-22T08:54:45
+
+
+ BATCHMODE ARGUMENTS:
+/Applications/Unity 4.6/Unity.app/Contents/MacOS/Unity
+-batchmode
+-projectPath
+/Users/paulhayes/Workspace/AR-rigging
+-quit
+-executeMethod
+MakeBundle.BundleCommandLine
+-logFile
+/Users/paulhayes/Workspace/AR-rigging/bundle-log.txt
+-3dify:bundle-files
+Models/paul_20000_blender/model_20000.obj
+-3dify:bundle-output
+/Users/paulhayes/Workspace/AR-rigging/model.bin
+Successfully changed project path to: /Users/paulhayes/Workspace/AR-rigging
+/Users/paulhayes/Workspace/AR-rigging
+Loading GUID <-> Path mappings ... 0.001471 seconds.
+Loading Asset Database ...  0.005374 seconds
+AssetDatabase consistency checks ...  0.007735 seconds
+Initialize engine version: 4.6.1f1 (d1db7a1b5196)
+GfxDevice: creating device client; threaded=0
+OpenGL:
+    Version:  OpenGL 2.1 [2.1 NVIDIA-10.2.1 310.41.15f01]
+    Renderer: NVIDIA GeForce GT 650M OpenGL Engine
+    Vendor:   NVIDIA Corporation
+    VRAM:     1024 MB
+    Extensions: GL_ARB_color_buffer_float GL_ARB_depth_buffer_float GL_ARB_depth_clamp GL_ARB_depth_texture GL_ARB_draw_buffers GL_ARB_draw_elements_base_vertex GL_ARB_draw_instanced GL_ARB_fragment_program GL_ARB_fragment_program_shadow GL_ARB_fragment_shader GL_ARB_framebuffer_object GL_ARB_framebuffer_sRGB GL_ARB_half_float_pixel GL_ARB_half_float_vertex GL_ARB_imaging GL_ARB_instanced_arrays GL_ARB_multisample GL_ARB_multitexture GL_ARB_occlusion_query GL_ARB_pixel_buffer_object GL_ARB_point_parameters GL_ARB_point_sprite GL_ARB_provoking_vertex GL_ARB_seamless_cube_map GL_ARB_shader_objects GL_ARB_shader_texture_lod GL_ARB_shading_language_100 GL_ARB_shadow GL_ARB_sync GL_ARB_texture_border_clamp GL_ARB_texture_compression GL_ARB_texture_compression_rgtc GL_ARB_texture_cube_map GL_ARB_texture_env_add GL_ARB_texture_env_combine GL_ARB_texture_env_crossbar GL_ARB_texture_env_dot3 GL_ARB_texture_float GL_ARB_texture_mirrored_repeat GL_ARB_texture_non_power_of_two GL_ARB_texture_rectangle GL_ARB_texture_rg GL_ARB_transpose_matrix GL_ARB_vertex_array_bgra GL_ARB_vertex_blend GL_ARB_vertex_buffer_object GL_ARB_vertex_program GL_ARB_vertex_shader GL_ARB_window_pos GL_EXT_abgr GL_EXT_bgra GL_EXT_bindable_uniform GL_EXT_blend_color GL_EXT_blend_equation_separate GL_EXT_blend_func_separate GL_EXT_blend_minmax GL_EXT_blend_subtract GL_EXT_clip_volume_hint GL_EXT_debug_label GL_EXT_debug_marker GL_EXT_depth_bounds_test GL_EXT_draw_buffers2 GL_EXT_draw_range_elements GL_EXT_fog_coord GL_EXT_framebuffer_blit GL_EXT_framebuffer_multisample GL_EXT_framebuffer_multisample_blit_scaled GL_EXT_framebuffer_object GL_EXT_framebuffer_sRGB GL_EXT_geometry_shader4 GL_EXT_gpu_program_parameters GL_EXT_gpu_shader4 GL_EXT_multi_draw_arrays GL_EXT_packed_depth_stencil GL_EXT_packed_float GL_EXT_provoking_vertex GL_EXT_rescale_normal GL_EXT_secondary_color GL_EXT_separate_specular_color GL_EXT_shadow_funcs GL_EXT_stencil_two_side GL_EXT_stencil_wrap GL_EXT_texture_array GL_EXT_texture_compression_dxt1 GL_EXT_texture_compression_s3tc GL_EXT_texture_env_add GL_EXT_texture_filter_anisotropic GL_EXT_texture_integer GL_EXT_texture_lod_bias GL_EXT_texture_mirror_clamp GL_EXT_texture_rectangle GL_EXT_texture_shared_exponent GL_EXT_texture_sRGB GL_EXT_texture_sRGB_decode GL_EXT_timer_query GL_EXT_transform_feedback GL_EXT_vertex_array_bgra GL_APPLE_aux_depth_stencil GL_APPLE_client_storage GL_APPLE_element_array GL_APPLE_fence GL_APPLE_float_pixels GL_APPLE_flush_buffer_range GL_APPLE_flush_render GL_APPLE_object_purgeable GL_APPLE_packed_pixels GL_APPLE_pixel_buffer GL_APPLE_rgb_422 GL_APPLE_row_bytes GL_APPLE_specular_vector GL_APPLE_texture_range GL_APPLE_transform_hint GL_APPLE_vertex_array_object GL_APPLE_vertex_array_range GL_APPLE_vertex_point_size GL_APPLE_vertex_program_evaluators GL_APPLE_ycbcr_422 GL_ATI_separate_stencil GL_ATI_texture_env_combine3 GL_ATI_texture_float GL_ATI_texture_mirror_once GL_IBM_rasterpos_clip GL_NV_blend_square GL_NV_conditional_render GL_NV_depth_clamp GL_NV_fog_distance GL_NV_fragment_program_option GL_NV_fragment_program2 GL_NV_light_max_exponent GL_NV_multisample_filter_hint GL_NV_point_sprite GL_NV_texgen_reflection GL_NV_texture_barrier GL_NV_vertex_program2_option GL_NV_vertex_program3 GL_SGIS_generate_mipmap GL_SGIS_texture_edge_clamp GL_SGIS_texture_lod 
+GL: Detected 0 MB VRAM
+Begin MonoManager ReloadAssembly
+Platform assembly: /Applications/Unity 4.6/Unity.app/Contents/Frameworks/Managed/UnityEngine.dll (this message is harmless)
+Platform assembly: /Applications/Unity 4.6/Unity.app/Contents/Frameworks/Managed/UnityEditor.dll (this message is harmless)
+Platform assembly: /Applications/Unity 4.6/Unity.app/Contents/Frameworks/Managed/Unity.Locator.dll (this message is harmless)
+Platform assembly: /Applications/Unity 4.6/Unity.app/Contents/Frameworks/Managed/Unity.DataContract.dll (this message is harmless)
+Platform assembly: /Applications/Unity 4.6/Unity.app/Contents/Frameworks/Mono/lib/mono/2.0/System.Core.dll (this message is harmless)
+Platform assembly: /Applications/Unity 4.6/Unity.app/Contents/Frameworks/Managed/Unity.IvyParser.dll (this message is harmless)
+Platform assembly: /Applications/Unity 4.6/Unity.app/Contents/Frameworks/Mono/lib/mono/2.0/System.dll (this message is harmless)
+Platform assembly: /Applications/Unity 4.6/Unity.app/Contents/Frameworks/Mono/lib/mono/2.0/System.Xml.dll (this message is harmless)
+Platform assembly: /Applications/Unity 4.6/Unity.app/Contents/Frameworks/Mono/lib/mono/2.0/System.Configuration.dll (this message is harmless)
+Platform assembly: /Applications/Unity 4.6/Unity.app/Contents/PackageManager/Unity/PackageManager/4.6.1/Unity.PackageManager.dll (this message is harmless)
+Initializing Unity.PackageManager (PackageManager) v4.6.1 for Unity v4.6.1
+Setting GUISystem v4.6.1 for Unity v4.6.1f1 to /Applications/Unity 4.6/Unity.app/Contents/UnityExtensions/Unity/GUISystem/4.6.1
+Registering custom dll's ...
+Non platform assembly: data-0x9164800 (this message is harmless)
+Non platform assembly: data-0x19f00000 (this message is harmless)
+Non platform assembly: data-0x19f00000 (this message is harmless)
+Non platform assembly: data-0x19dcf000 (this message is harmless)
+Register platform support module: /Applications/Unity 4.6/Unity.app/Contents/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll
+Register platform support module: /Applications/Unity 4.6/Unity.app/Contents/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.dll
+Register platform support module: /Applications/Unity 4.6/Unity.app/Contents/PlaybackEngines/BlackBerryPlayer/UnityEditor.BB10.Extensions.dll
+Registered in 0.013675 seconds.
+Non platform assembly: /Users/paulhayes/Workspace/AR-rigging/Library/ScriptAssemblies/Assembly-CSharp-firstpass.dll (this message is harmless)
+Loading /Users/paulhayes/Workspace/AR-rigging/Library/ScriptAssemblies/Assembly-CSharp-firstpass.dll into Unity Child Domain
+Non platform assembly: /Users/paulhayes/Workspace/AR-rigging/Library/ScriptAssemblies/Assembly-CSharp.dll (this message is harmless)
+Loading /Users/paulhayes/Workspace/AR-rigging/Library/ScriptAssemblies/Assembly-CSharp.dll into Unity Child Domain
+Non platform assembly: /Users/paulhayes/Workspace/AR-rigging/Library/ScriptAssemblies/Assembly-CSharp-Editor.dll (this message is harmless)
+Loading /Users/paulhayes/Workspace/AR-rigging/Library/ScriptAssemblies/Assembly-CSharp-Editor.dll into Unity Child Domain
+Non platform assembly: /Users/paulhayes/Workspace/AR-rigging/Library/ScriptAssemblies/Assembly-UnityScript-firstpass.dll (this message is harmless)
+Loading /Users/paulhayes/Workspace/AR-rigging/Library/ScriptAssemblies/Assembly-UnityScript-firstpass.dll into Unity Child Domain
+Non platform assembly: /Users/paulhayes/Workspace/AR-rigging/Library/ScriptAssemblies/Assembly-UnityScript-Editor-firstpass.dll (this message is harmless)
+Loading /Users/paulhayes/Workspace/AR-rigging/Library/ScriptAssemblies/Assembly-UnityScript-Editor-firstpass.dll into Unity Child Domain
+Platform assembly: /Applications/Unity 4.6/Unity.app/Contents/PackageManager/Unity/PackageManager/4.6.1/Unity.PackageManager.dll (this message is harmless)
+Loading /Applications/Unity 4.6/Unity.app/Contents/PackageManager/Unity/PackageManager/4.6.1/Unity.PackageManager.dll into Unity Child Domain
+Non platform assembly: /Applications/Unity 4.6/Unity.app/Contents/UnityExtensions/Unity/GUISystem/4.6.1/UnityEngine.UI.dll (this message is harmless)
+Loading /Applications/Unity 4.6/Unity.app/Contents/UnityExtensions/Unity/GUISystem/4.6.1/UnityEngine.UI.dll into Unity Child Domain
+Non platform assembly: /Applications/Unity 4.6/Unity.app/Contents/UnityExtensions/Unity/GUISystem/4.6.1/Editor/UnityEditor.UI.dll (this message is harmless)
+Loading /Applications/Unity 4.6/Unity.app/Contents/UnityExtensions/Unity/GUISystem/4.6.1/Editor/UnityEditor.UI.dll into Unity Child Domain
+Non platform assembly: /Users/paulhayes/Workspace/AR-rigging/Assets/Editor/QCAR/Scripts/Qualcomm.Vuforia.UnityExtensions.Editor.dll (this message is harmless)
+Loading /Users/paulhayes/Workspace/AR-rigging/Assets/Editor/QCAR/Scripts/Qualcomm.Vuforia.UnityExtensions.Editor.dll into Unity Child Domain
+Non platform assembly: /Users/paulhayes/Workspace/AR-rigging/Assets/Plugins/System.Drawing.dll (this message is harmless)
+Loading /Users/paulhayes/Workspace/AR-rigging/Assets/Plugins/System.Drawing.dll into Unity Child Domain
+Non platform assembly: /Users/paulhayes/Workspace/AR-rigging/Assets/Qualcomm Augmented Reality/Scripts/Internal/Qualcomm.Vuforia.UnityExtensions.dll (this message is harmless)
+Loading /Users/paulhayes/Workspace/AR-rigging/Assets/Qualcomm Augmented Reality/Scripts/Internal/Qualcomm.Vuforia.UnityExtensions.dll into Unity Child Domain
+Platform assembly: /Applications/Unity 4.6/Unity.app/Contents/Frameworks/Managed/UnityEditor.Graphs.dll (this message is harmless)
+Loading /Applications/Unity 4.6/Unity.app/Contents/Frameworks/Managed/UnityEditor.Graphs.dll into Unity Child Domain
+Non platform assembly: /Applications/Unity 4.6/Unity.app/Contents/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll (this message is harmless)
+Loading /Applications/Unity 4.6/Unity.app/Contents/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll into Unity Child Domain
+Non platform assembly: /Applications/Unity 4.6/Unity.app/Contents/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.dll (this message is harmless)
+Loading /Applications/Unity 4.6/Unity.app/Contents/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.dll into Unity Child Domain
+Non platform assembly: /Applications/Unity 4.6/Unity.app/Contents/PlaybackEngines/BlackBerryPlayer/UnityEditor.BB10.Extensions.dll (this message is harmless)
+Loading /Applications/Unity 4.6/Unity.app/Contents/PlaybackEngines/BlackBerryPlayer/UnityEditor.BB10.Extensions.dll into Unity Child Domain
+Platform assembly: /Applications/Unity 4.6/Unity.app/Contents/Frameworks/Managed/Mono.Cecil.dll (this message is harmless)
+Platform assembly: /Applications/Unity 4.6/Unity.app/Contents/Frameworks/Mono/lib/mono/2.0/UnityScript.dll (this message is harmless)
+Platform assembly: /Applications/Unity 4.6/Unity.app/Contents/Frameworks/Managed/ICSharpCode.NRefactory.dll (this message is harmless)
+Platform assembly: /Applications/Unity 4.6/Unity.app/Contents/Frameworks/Mono/lib/mono/2.0/Boo.Lang.dll (this message is harmless)
+Platform assembly: /Applications/Unity 4.6/Unity.app/Contents/Frameworks/Mono/lib/mono/2.0/System.Xml.Linq.dll (this message is harmless)
+Mono: successfully reloaded assembly
+- Completed reload, in  0.466 seconds
+System memory in use before: 27.8 MB.
+Unloading 76 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
+System memory in use after: 25.6 MB.
+
+Unloading 44 unused Assets to reduce memory usage. Loaded Objects now: 391.
+Total: 10.799913 ms (FindLiveObjects: 0.030411 ms CreateObjectMapping: 0.008330 ms MarkObjects: 0.491989 ms  DeleteObjects: 0.767380 ms)
+
+Validating Project structure ... 0.002280 seconds.
+Refresh: detecting if any assets need to be imported or removed ... 
+Hashing assets ... 0.000106 seconds
+----- Compute hash(es) for 1 asset(s).
+----- Asset named Assets/StreamingAssets/QCAR/unity.txt is skipped as no actual change.
+
+Refresh: elapses 0.018234 seconds (Nothing changed)
+
+----- Total AssetImport time: 0.017686s, AssetImport time: 0.000000s, Asset hashing: 0.000212s [98 B, 0.440540 mb/s]
+
+System memory in use before: 30.2 MB.
+Unloading 8 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
+System memory in use after: 29.5 MB.
+
+Unloading 44 unused Assets to reduce memory usage. Loaded Objects now: 392.
+Total: 5.122276 ms (FindLiveObjects: 0.025996 ms CreateObjectMapping: 0.006408 ms MarkObjects: 0.509646 ms  DeleteObjects: 0.776678 ms)
+
+TEST!!!
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:LogWarning(Object)
+MakeBundle:BundleCommandLine() (at Assets/Editor/MakeBundle.cs:16)
+ 
+(Filename: Assets/Editor/MakeBundle.cs Line: 16)
+
+Models/paul_20000_blender/model_20000.obj
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+MakeBundle:BundleCommandLine() (at Assets/Editor/MakeBundle.cs:20)
+ 
+(Filename: Assets/Editor/MakeBundle.cs Line: 20)
+
+/Users/paulhayes/Workspace/AR-rigging/model.bin
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+MakeBundle:BundleCommandLine() (at Assets/Editor/MakeBundle.cs:21)
+ 
+(Filename: Assets/Editor/MakeBundle.cs Line: 21)
+
+Models/paul_20000_blender/model_20000.obj
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+MakeBundle:BundleCommandLine() (at Assets/Editor/MakeBundle.cs:24)
+ 
+(Filename: Assets/Editor/MakeBundle.cs Line: 24)
+
+Bundling files Models/paul_20000_blender/model_20000.obj
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+MakeBundle:BundleCommandLine() (at Assets/Editor/MakeBundle.cs:29)
+ 
+(Filename: Assets/Editor/MakeBundle.cs Line: 29)
+
+Bundling output: /Users/paulhayes/Workspace/AR-rigging/model.bin
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+MakeBundle:Bundle(String[], String) (at Assets/Editor/MakeBundle.cs:38)
+MakeBundle:BundleCommandLine() (at Assets/Editor/MakeBundle.cs:31)
+ 
+(Filename: Assets/Editor/MakeBundle.cs Line: 38)
+
+
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+MakeBundle:Bundle(String[], String) (at Assets/Editor/MakeBundle.cs:46)
+MakeBundle:BundleCommandLine() (at Assets/Editor/MakeBundle.cs:31)
+ 
+(Filename: Assets/Editor/MakeBundle.cs Line: 46)
+
+Batchmode quit successfully invoked - shutting down!
+System memory in use before: 30.0 MB.
+Unloading 1 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
+System memory in use after: 29.7 MB.
+
+Unloading 0 unused Assets to reduce memory usage. Loaded Objects now: 394.
+Total: 2.845695 ms (FindLiveObjects: 0.024645 ms CreateObjectMapping: 0.005538 ms MarkObjects: 0.494736 ms  DeleteObjects: 0.002931 ms)
+
+Refresh: detecting if any assets need to be imported or removed ... Refresh: elapses 0.001855 seconds (Nothing changed)
+Updating ProjectSettings/ProjectSettings.asset - GUID: 00000000000000004000000000000000...
+ done. [Time: 21.204273 ms] 
+
+----- Total AssetImport time: 0.047776s, AssetImport time: 0.032546s, Asset hashing: 0.000000s [0 B, 0.000000 mb/s]
+
+Cleanup mono
+Exiting batchmode successfully now!
