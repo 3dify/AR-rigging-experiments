@@ -1,0 +1,19 @@
+{
+  "name": "AR-rigging",
+  "version": "1.0.0",
+  "description": "Automation of rigging, model processing, and uploading for 3dify scans\"",
+  "main": "main.js",
+  "scripts": {
+    "test": "main.js -t"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/3dify/AR-rigging.git"
+  },
+  "author": "Paul Hayes, Ian Byrne",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/3dify/AR-rigging/issues"
+  },
+  "homepage": "https://github.com/3dify/AR-rigging"
+}
