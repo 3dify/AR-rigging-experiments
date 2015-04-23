@@ -35,3 +35,4 @@ Thumbs.db
 secret.txt
 .DS_Store
 client.txt
+node_modules
