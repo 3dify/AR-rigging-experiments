@@ -36,3 +36,5 @@ secret.txt
 .DS_Store
 client.txt
 node_modules
+__MACOSX*
+.DS_Store*
