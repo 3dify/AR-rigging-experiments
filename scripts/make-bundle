@@ -1,0 +1,11 @@
+#!/bin/bash
+# make-bundle
+
+DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+LOG_FILE = $DIR/../logs/bundle-log.txt
+UNITY_PATH="/Applications/Unity 4.6/Unity.app/Contents/MacOS/Unity"
+
+echo "" > $LOG_FILE
+
+"$UNITY_PATH" -batchmode -projectPath $DIR/.. -quit -executeMethod MakeBundle.BundleCommandLine -logFile "$DIR/bundle-log.txt" -3dify:bundle-files Models/paul_20000_blender/model_20000.obj -3dify:bundle-output $(pwd)/model.bin
+
