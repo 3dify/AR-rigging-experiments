@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 var child_process = require('child_process');
+//var spawnSync = require('spawn-sync');
 var path = require('path');
 var fs = require('fs');
 var gm = require('gm');
@@ -11,7 +12,7 @@ var md5 = require('MD5');
 
 var config = require('./config.js');
 
-var expectedArgs = 4;
+var expectedArgs = 3;
 var cwd = process.cwd();
 var basePath = path.normalize(path.join(__dirname,config.basePath));
 var scriptsPath = path.normalize(__dirname);
@@ -21,7 +22,7 @@ var unityModelsPath = path.join(unityProjectPath,config.unityModelsPath);
 console.log(basePath);
 console.log(scriptsPath);
 var exitWithError = function(msg){
-	process.stderr.write(msg);
+	process.stderr.write(msg+"\n");
 	process.exit(1);
 }
 
@@ -31,7 +32,7 @@ if( process.argv[0] != 'node' )
 }
 
 if( process.argv.length != expectedArgs ){
-	exitWithError("missing arguments\nusage: main.js {asset_dir} {output_dir} \n");
+	exitWithError("missing arguments\nusage: main.js {asset_dir} {output_dir}");
 }
 
 
@@ -45,8 +46,8 @@ outputDir = path.join(outputDir,assetName)
 
 if( !fs.existsSync(outputDir) ){
 	fs.mkdirSync(outputDir);
-} else if( fs.statSync(outputDir).isDirectory() ){
-	exitWithError('Error output dir name exists as file');
+} else if( !fs.statSync(outputDir).isDirectory() ){
+	exitWithError('Error output dir name exists as file '+outputDir);
 }
 
 console.log(assetDir);
@@ -56,7 +57,7 @@ var fileList=fs.readdirSync(assetDir);
 
 //Convert png to jpg
 
-var pngFiles = fileList.filter(function(e){ e.substr(4).toLowerCase() == '.png' });
+var pngFiles = fileList.filter(function(e){ return e.substr(-4).toLowerCase() == '.png' });
 var jpgFiles = [];
 console.log(fileList);
 console.log(pngFiles);
@@ -79,7 +80,7 @@ pngFiles.forEach(function(imageFile){
 
 //Decimate mesh
 
-var objFile = fileList.filter(function(e){ e.substr(4).toLowerCase() == '.obj' })[0];
+var objFile = fileList.filter( function(e){ return e.substr(-4).toLowerCase() == '.obj' })[0];
 var binFilePath = path.normalize(path.join(unityModelsPath,"model.obj"));
 
 if( !objFile ){

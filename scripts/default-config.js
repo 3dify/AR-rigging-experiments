@@ -6,7 +6,7 @@ module.exports = {
 	unityProjectPath: './',
 	textureSize : 1<<10,
 	numOfPolys : 30000,
-	emptyBlend : 'Assets/Models/empty.blend'
+	emptyBlend : 'Assets/Models/empty.blend',
 	ftp : {
 		user: 'ftp%403dify.co.uk',
 		password: '',
