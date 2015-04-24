@@ -66,11 +66,13 @@ if( pngFiles.length == 0 ){
 	exitWithError('no png files found in '+assetDir);
 }
 
+var imagesLeftToSave=0;
 pngFiles.forEach(function(imageFile){
 	outFile = path.join(outputDir,imageFile.substr(0,imageFile.length-4)+".jpg");
-
-	gm(path.join(assetDir,imageFile)).compress('JPEG').thumb(config.textureSize,config.textureSize,outFile,70,function(){
-		exitWithError('failed to save '+outFile);
+	imagesLeftToSave++;
+	gm(path.join(assetDir,imageFile)).compress('JPEG').thumb(config.textureSize,config.textureSize,outFile,config.textureQuality,function(err){
+		if(err)exitWithError('failed to save '+outFile);
+		imagesLeftToSave--;
 	});
 
 	jpgFiles.push(outFile);
@@ -107,7 +109,7 @@ var makeModelArgs = [
 	"-3dify:bundle-files "+path.normalize(path.join(unityModelsPath,objFile)),
 	"-3dify:bundle-output "+binFilePath
 ];
-var makeBinModelCmd = unityExecutablePath+makeModelArgs.join(' ');
+var makeBinModelCmd = config.unityExecutablePath+makeModelArgs.join(' ');
 console.log("executing decimate:\n"+makeBinModelCmd);
 child = child_process.spawnSync(makeBinModelCmd);
 
@@ -118,35 +120,44 @@ if(child.error>0){
 
 //Create zip file
 
-var zipFile = assetName+"-"+(new Date().toISOString())+".zip";
-var zipFilePath = path.join(cwd,zipFile);
-var remoteZipFile = md5(zipFile);
-var remoteZipPath = path.join(config.ftp.path,remoteZipFile);
-var zip = new AdmZip();
-zip.addLocalFile( binFilePath );
-jpgFiles.each(zip.addLocalFile.bind(zip));
-zip.writeZip(zipFilePath);
+var waitForSave=setInterval(function(){
+	if(imagesLeftToSave==0){
+		saveZipAndUpload();
+		clearInterval(waitForSave);
+	}
+},40);
+
+var saveZipAndUpload = function(){
+	var zipFile = assetName+"-"+(new Date().toISOString())+".zip";
+	var zipFilePath = path.join(cwd,zipFile);
+	var remoteZipFile = md5(zipFile);
+	var remoteZipPath = path.join(config.ftp.path,remoteZipFile);
+	var zip = new AdmZip();
+	zip.addLocalFile( binFilePath );
+	jpgFiles.forEach(zip.addLocalFile.bind(zip));
+	zip.writeZip(zipFilePath);
+
+	//FTP Upload zip
+
+	var ftpConnection = new ftp();
+	ftpConnection.on('ready', function() {
+	    ftpConnection.put(zipFilePath, remoteZipPath, function(err) {
+	      if (err){
+	      		exitWithError(err.toString());
+	      }
+	      ftpConnection.end();
+	    });
+	  });
+	ftpConnection.connect(config.ftp);
+
+	//Generate QR Code
+	var qrImagePath = path.join(cwd,assetName+".png");
+	var qrPng = qr.image('http://3dify.co.uk/scans/'+remoteZipFile, { type: 'png' });
+	qrPng.pipe(fs.createWriteStream(qrImagePath));
+
+	child = child_process.spawnSync('open -a Preview '+qrImagePath);
 
 
-//FTP Upload zip
-
-var ftpConnection = new ftp();
-ftpConnection.on('ready', function() {
-    c.put(zipFilePath, remoteZipPath, function(err) {
-      if (err){
-      		exitWithError(err.toString());
-      }
-      c.end();
-    });
-  });
-ftpConnection.connect(config.ftp);
-
-//Generate QR Code
-var qrImagePath = path.join(cwd,assetName+".png");
-var qrPng = qr.image('http://3dify.co.uk/scans/'+remoteZipFile, { type: 'png' });
-qrPng.pipe(fs.createWriteStream());
-
-child = child_process.spawnSync('open -a Preview '+qrImagePath);
-
+}
 
 

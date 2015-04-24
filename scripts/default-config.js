@@ -5,6 +5,7 @@ module.exports = {
 	unityLogPath: 'logs/unityLog.txt',
 	unityProjectPath: './',
 	textureSize : 1<<10,
+	textureQuality: 70,
 	numOfPolys : 30000,
 	emptyBlend : 'Assets/Models/empty.blend',
 	ftp : {
