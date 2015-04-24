@@ -70,6 +70,7 @@ var imagesLeftToSave=0;
 pngFiles.forEach(function(imageFile){
 	outFile = path.join(outputDir,imageFile.substr(0,imageFile.length-4)+".jpg");
 	imagesLeftToSave++;
+	//writeFileSync(outFile,gm(path.join(assetDir,imageFile)).compress('JPEG').quality(config.textureQuality).toBuffer());
 	gm(path.join(assetDir,imageFile)).compress('JPEG').thumb(config.textureSize,config.textureSize,outFile,config.textureQuality,function(err){
 		if(err)exitWithError('failed to save '+outFile);
 		imagesLeftToSave--;
@@ -83,17 +84,26 @@ pngFiles.forEach(function(imageFile){
 //Decimate mesh
 
 var objFile = fileList.filter( function(e){ return e.substr(-4).toLowerCase() == '.obj' })[0];
-var binFilePath = path.normalize(path.join(unityModelsPath,"model.obj"));
+var binFilePath = path.normalize(path.join(outputDir,"model.bin"));
 
 if( !objFile ){
 	exitWithError('no obj file found in '+assetDir);
 }
 
-var decimateCmd = scriptsPath+"/blender -P "+scriptsPath+"/decimate.py -b \""+config.emptyBlend+"\" -- \""+assetDir+"\" \""+unityModelsPath+"\" "+Number(config.numOfPolys).toString();
+var decimateCmd = scriptsPath+"/blender";
+var decimateArgs = [
+	"-P \""+scriptsPath+"/decimate.py\"",
+	"-b \""+config.emptyBlend+"\"",
+	"--", 
+	"\""+assetDir+"\"",
+	"\""+unityModelsPath+"\" ",
+	Number(config.numOfPolys).toString()
+]
 console.log("executing decimate:\n"+decimateCmd);
-child = child_process.spawnSync(decimateCmd);
-if(child.error>0){
-	exitWithError(stderr.toString());
+child = child_process.spawnSync(decimateCmd,decimateArgs);
+if(child.error){
+	console.log(child.error);
+	exitWithError(child.error.toString());
 }
 
 //Create binary model file from Unity
@@ -105,18 +115,19 @@ var makeModelArgs = [
 	"-projectPath "+config.unityProjectPath,
 	"-quit",
 	"-executeMethod MakeBundle.BundleCommandLine",
-	"-logFile "+path.normalize(config.unityLogPath),
+	"-logFile "+path.normalize(path.join(basePath,config.unityLogPath)),
 	"-3dify:bundle-files "+path.normalize(path.join(unityModelsPath,objFile)),
 	"-3dify:bundle-output "+binFilePath
 ];
-var makeBinModelCmd = config.unityExecutablePath+makeModelArgs.join(' ');
-console.log("executing decimate:\n"+makeBinModelCmd);
-child = child_process.spawnSync(makeBinModelCmd);
+var makeBinModelCmd = config.unityExecutablePath;
+console.log("constructing binary model file:\n"+makeBinModelCmd);
+child = child_process.spawnSync(makeBinModelCmd,[makeModelArgs.join(' ')]);
 
-if(child.error>0){
-	exitWithError(stderr.toString());
+if(child.error){
+	console.log(child.error);
+	exitWithError(child.error.toString());
 }
-
+process.quit();
 
 //Create zip file
 
