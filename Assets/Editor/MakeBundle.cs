@@ -10,15 +10,18 @@ public class MakeBundle {
 
 
 	public static void BundleCommandLine(){
-		System.IO.StreamWriter standardOutput = new System.IO.StreamWriter(System.Console.OpenStandardOutput());
-		standardOutput.AutoFlush = true;
-		System.Console.SetOut(standardOutput);
+		System.IO.StreamWriter standardErr = new System.IO.StreamWriter(System.Console.OpenStandardError());
+		standardErr.AutoFlush = true;
+		System.Console.SetOut(standardErr);
+
 		Debug.LogWarning("TEST!!!");
-		var fileArg = MakeBundle.GetCmdLineArg("-3dify:bundle-files");
-		var outputArg = MakeBundle.GetCmdLineArg("-3dify:bundle-output");
+		var fileArg = MakeBundle.GetCmdLineArg("-3dify-bundle-files");
+		var outputArg = MakeBundle.GetCmdLineArg("-3dify-bundle-output");
 		
-		Debug.Log (fileArg);
-		Debug.Log (outputArg);
+		Debug.Log (string.Format("input files : {0}",fileArg));
+		Debug.Log (string.Format("output file : {0}",outputArg));
+		
+		System.Console.Write("\nTest\n");
 		
 		if( fileArg != null && outputArg != null){
 			Debug.Log (fileArg);
@@ -26,7 +29,14 @@ public class MakeBundle {
 				f=>File.Exists(Path.Combine(Application.dataPath,f))
 			).ToArray<string>();
             //.Select(f=>)
-			Debug.Log(string.Format("Bundling files {0}",string.Join(",",files)));
+            
+			if( files.Length == 0 ) {
+				throw new UnityException("No valid files found to process!");
+                
+            }           
+            
+            
+			Debug.Log(String.Format("Bundling files {0}",String.Join(",",files)));
 			
 			if( files.Length > 0 ) Bundle(files,outputArg);
 		}
@@ -40,9 +50,16 @@ public class MakeBundle {
 	}
 	
 	public static void Bundle(string[] inputFiles,string outputFile){
+		AssetDatabase.Refresh();
 		Debug.Log(string.Format("Bundling output: {0}",outputFile));
+		Debug.Log (string.Join(", ",inputFiles));
 		//UnityEngine.Object[] allAssets = inputFiles.SelectMany(f=>AssetDatabase.LoadAllAssetsAtPath(f,typeof(UnityEngine.Object)).ToList()).Where (f=>f is Mesh).ToArray();
-		UnityEngine.Mesh[] meshes = inputFiles.Select(f=>AssetDatabase.LoadAssetAtPath("Assets/"+f,typeof(Mesh)) as Mesh).ToArray();
+		UnityEngine.Mesh[] meshes = inputFiles.Select(f=>AssetDatabase.LoadAssetAtPath(Path.Combine("Assets",f),typeof(Mesh)) as Mesh).Where(m=>m!=null).ToArray();
+		
+		if( meshes.Length == 0 ) {
+			throw new UnityException("No meshes found to process!");
+		
+		}
 		
 		/*
 		List<Mesh> meshes = new List<Mesh>();
@@ -53,8 +70,9 @@ public class MakeBundle {
 		}
 		*/
 		
+		
+		
 		foreach(Mesh mesh in meshes){
-			if( mesh == null ) return;
 			Debug.Log(string.Format("Serializing mesh {0}",outputFile));
 			byte[] meshData = MeshSerializer.WriteMesh(mesh,true);
 			File.WriteAllBytes(outputFile,meshData);
@@ -75,7 +93,8 @@ public class MakeBundle {
 		string[] args = System.Environment.GetCommandLineArgs();
 		int bundleArgIndex = Array.IndexOf<string>( args, arg );
         if( bundleArgIndex == -1 || bundleArgIndex == (args.Length-1) ){
-        	return null;
+            Debug.LogWarning(String.Format("named argument {0} not found",arg));
+            return null;
         }
         
 		return args[bundleArgIndex+1];

@@ -1,14 +1,16 @@
 #!/usr/bin/env node
-
 var child_process = require('child_process');
 //var spawnSync = require('spawn-sync');
 var path = require('path');
 var fs = require('fs');
 var gm = require('gm');
 var AdmZip = require('adm-zip');
+var md5 = require('MD5');
 var qr = require('qr-image');
 var ftp = require('ftp');
-var md5 = require('MD5');
+var request = require('sync-request');
+var crypto = require('crypto');
+require('./rfc1123.js');
 
 var config = require('./config.js');
 
@@ -17,10 +19,9 @@ var cwd = process.cwd();
 var basePath = path.normalize(path.join(__dirname,config.basePath));
 var scriptsPath = path.normalize(__dirname);
 var unityProjectPath = path.join(basePath,config.unityProjectPath);
-var unityModelsPath = path.join(unityProjectPath,config.unityModelsPath);
+var unityModelPath = path.join(unityProjectPath,config.unityAssetPath,config.unityModelPath);
+var unityModelPathRelative = path.join(config.unityModelPath);
 
-console.log(basePath);
-console.log(scriptsPath);
 var exitWithError = function(msg){
 	process.stderr.write(msg+"\n");
 	process.exit(1);
@@ -37,12 +38,11 @@ if( process.argv.length != expectedArgs ){
 
 
 var assetDir = path.normalize(process.argv[2]);
-var outputDir = cwd;
 var assetName = path.basename(assetDir);
-outputDir = path.join(outputDir,assetName)
-
+var outputDir = path.join(cwd,assetName);
 
 //Load json config file
+
 
 if( !fs.existsSync(outputDir) ){
 	fs.mkdirSync(outputDir);
@@ -50,17 +50,12 @@ if( !fs.existsSync(outputDir) ){
 	exitWithError('Error output dir name exists as file '+outputDir);
 }
 
-console.log(assetDir);
-console.log(assetName);
-
 var fileList=fs.readdirSync(assetDir);
 
 //Convert png to jpg
 
 var pngFiles = fileList.filter(function(e){ return e.substr(-4).toLowerCase() == '.png' });
 var jpgFiles = [];
-console.log(fileList);
-console.log(pngFiles);
 
 if( pngFiles.length == 0 ){
 	exitWithError('no png files found in '+assetDir);
@@ -92,18 +87,19 @@ if( !objFile ){
 
 var decimateCmd = scriptsPath+"/blender";
 var decimateArgs = [
-	"-P \""+scriptsPath+"/decimate.py\"",
-	"-b \""+config.emptyBlend+"\"",
-	"--", 
-	"\""+assetDir+"\"",
-	"\""+unityModelsPath+"\" ",
+	"-P",scriptsPath+"/decimate.py",
+	"-b",config.emptyBlend,
+	"--",
+	assetDir,
+	unityModelPath,
 	Number(config.numOfPolys).toString()
-]
+];
+
 console.log("executing decimate:\n"+decimateCmd);
 child = child_process.spawnSync(decimateCmd,decimateArgs);
-if(child.error){
-	console.log(child.error);
-	exitWithError(child.error.toString());
+
+if(child.status>0){	
+	exitWithError(child.stderr.toString());
 }
 
 //Create binary model file from Unity
@@ -112,24 +108,21 @@ config.unityProjectPath = path.normalize(unityProjectPath);
 
 var makeModelArgs = [
 	"-batchmode",
-	"-projectPath "+config.unityProjectPath,
+	"-projectPath",config.unityProjectPath,
 	"-quit",
-	"-executeMethod MakeBundle.BundleCommandLine",
-	"-logFile "+path.normalize(path.join(basePath,config.unityLogPath)),
-	"-3dify:bundle-files "+path.normalize(path.join(unityModelsPath,objFile)),
-	"-3dify:bundle-output "+binFilePath
+	"-executeMethod","MakeBundle.BundleCommandLine",
+	"-logFile",path.normalize(path.join(basePath,config.unityLogPath)),
+	"-3dify-bundle-files",path.normalize(path.join(unityModelPathRelative,objFile)),
+	"-3dify-bundle-output",binFilePath
 ];
 var makeBinModelCmd = config.unityExecutablePath;
 console.log("constructing binary model file:\n"+makeBinModelCmd);
-child = child_process.spawnSync(makeBinModelCmd,[makeModelArgs.join(' ')]);
+child = child_process.spawnSync(makeBinModelCmd,makeModelArgs);
 
-if(child.error){
-	console.log(child.error);
-	exitWithError(child.error.toString());
+if(child.status>0){
+	exitWithError(child.stderr.toString());
 }
-process.quit();
 
-//Create zip file
 
 var waitForSave=setInterval(function(){
 	if(imagesLeftToSave==0){
@@ -139,17 +132,32 @@ var waitForSave=setInterval(function(){
 },40);
 
 var saveZipAndUpload = function(){
+	//Create zip file
+	console.log('creating zip file');
 	var zipFile = assetName+"-"+(new Date().toISOString())+".zip";
 	var zipFilePath = path.join(cwd,zipFile);
 	var remoteZipFile = md5(zipFile);
 	var remoteZipPath = path.join(config.ftp.path,remoteZipFile);
+	var zipFileUrl = 'http://3dify.co.uk/scans/'+remoteZipFile;
+
+	/*
 	var zip = new AdmZip();
-	zip.addLocalFile( binFilePath );
-	jpgFiles.forEach(zip.addLocalFile.bind(zip));
+	zip.addLocalFile( binFilePath, '');
+	jpgFiles.forEach(function(file){
+		zip.addLocalFile(file,'');
+	});
+	
 	zip.writeZip(zipFilePath);
+	*/
+
+	child = child_process.spawnSync('zip',['-r',zipFilePath,assetName]);
+	
+	if(child.status>0){
+		exitWithError(child.stderr.toString());
+	}
 
 	//FTP Upload zip
-
+	console.log('ftp uploading zip file');
 	var ftpConnection = new ftp();
 	ftpConnection.on('ready', function() {
 	    ftpConnection.put(zipFilePath, remoteZipPath, function(err) {
@@ -163,12 +171,47 @@ var saveZipAndUpload = function(){
 
 	//Generate QR Code
 	var qrImagePath = path.join(cwd,assetName+".png");
-	var qrPng = qr.image('http://3dify.co.uk/scans/'+remoteZipFile, { type: 'png' });
-	qrPng.pipe(fs.createWriteStream(qrImagePath));
+	console.log('creating qr code');
+	var qrPng = qr.imageSync(zipFileUrl, { type: 'png' });
+	fs.writeFileSync(qrImagePath,qrPng);
 
-	child = child_process.spawnSync('open -a Preview '+qrImagePath);
+	child = child_process.spawnSync('open',['-a','Preview',qrImagePath]);
+	if(child.status>0){
+		exitWithError(child.stderr.toString());
+	}
 
+	//Submit QR Code to Vuforia
 
+	var postData  = JSON.stringify({
+		name : assetName,
+		width : 1,
+		image : fs.readFileSync(qrImagePath).toString('base64')
+	});
+	var date = new Date().rfc1123();
+	var shaSum = crypto.createHmac('sha1',config.vuforia.secretKey);
+	shaSum.update("POST\n"+postData+"\napplication/json\n"+date+"\n/targets");
+	
+
+	var options = {
+	  hostname: 'https://vws.vuforia.com/targets',
+	  port: 80,
+	  path: '/upload',
+	  method: 'POST',
+	  headers: {
+	    'Content-Type': 'application/json',
+	    'Content-Length': postData.length,
+	    'Date' : date,
+		'Authorization' : "VWS "+config.vuforia.accessKey+":"+shaSum.digest('base64')
+	  },
+	  body: postData
+	};
+
+	var res = request('POST', 'http://example.com');
+	console.log(res );
+	console.log( res.getBody() );
+	
+
+	console.log(zipFileUrl);
 }
 
 

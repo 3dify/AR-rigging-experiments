@@ -13,6 +13,10 @@ module.exports = {
 		password: '',
 		host: '3dify.co.uk'
 		path: './scans'
+	},
+	vuforia : {
+		accessKey : '',
+		secretKey : ''
 	}
 }
 
