@@ -42,3 +42,5 @@ __MACOSX*
 scripts/config.js
 
 *.bin
+
+logs/[^.]*
