@@ -40,3 +40,5 @@ __MACOSX*
 .DS_Store*
 
 scripts/config.js
+
+*.bin
