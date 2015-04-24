@@ -17,7 +17,10 @@
   },
   "homepage": "https://github.com/3dify/AR-rigging",
   "dependencies": {
+    "MD5": "^1.2.1",
+    "adm-zip": "^0.4.7",
     "crypto-md5": "^1.0.0",
+    "ftp": "^0.3.10",
     "gm": "^1.17.0",
     "qr-image": "^3.1.0"
   }

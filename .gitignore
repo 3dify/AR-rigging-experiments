@@ -38,3 +38,5 @@ client.txt
 node_modules
 __MACOSX*
 .DS_Store*
+
+scripts/config.js
