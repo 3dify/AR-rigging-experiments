@@ -29,6 +29,11 @@ Then modify scripts/config.js to have valid Unity 3d, and Blender path, as well 
 
 ## Enable Auto Rigging Setup ( in progress )
 
+Download and extract SmartBodySDK into root of this project.
+
+Then follow build instructions for your operating system in SmartBodyManual.pdf
+
+
 ```
 cp SmartBodySDK/core/smartbody/sbgui/bin/libpinocchio.dylib $PYTHONPATH
 ```
