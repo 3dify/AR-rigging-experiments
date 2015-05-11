@@ -1,6 +1,18 @@
 # AR Model Processing Automation
 
+## Requires 
+Unity 4.6.x
+Blender 2.7.x
+
 ## Setup 
+
+First install the required node packages.
+
+```
+npm install
+```
+
+Then make a copy of default-config.js.
 
 ```
 cp scripts/default-config.js scripts/config.js
