@@ -1,58 +1,27 @@
-# AR-rigging
-A look at the workflow for early stage Augmented Reality experiments using Mixamo, Unity, and the Vuforia Toolkit.
+# AR Model Processing Automation
 
-Video of first example test can be downloaded here:
+## Setup 
 
-https://www.dropbox.com/s/2iimtorsgwvh3hn/flip_usb_cam.mov?dl=0
+```
+cp scripts/default-config.js scripts/config.js
+```
 
-Preparing git following this guide
+Then modify scripts/config.js to have valid Unity 3d, and Blender path, as well as authorization credencials for Vuforia and FTP.
 
-http://stackoverflow.com/questions/21573405/how-to-prepare-a-unity-project-for-git
+## Running
 
-Workflow to Date
+```
+./scripts/main.js {asset_dir} {output_dir}
+```
 
-=> 3D scan
 
-=> (Skanect) Export as OBJ with texture UV - currently using about 400k polygons - need to see how low this can go.
+## Enable Auto Rigging Setup ( in progress )
 
-=> Zip the folder with .obj, .png, and .mtl files
+```
+cp SmartBodySDK/core/smartbody/sbgui/bin/libpinocchio.dylib $PYTHONPATH
+```
 
-=> Upload zip file containing above assets to Mixamo
+If this errors, find the actual location of your python path and substitute $PYTHONPATH for it.
 
-=> Rig using Mixamo software (follow simple step by step)
 
-=> Download .fbx for Unity
 
-=> Import into Unity (This example uses Unity version 4.6.2f1)
-
-=> If the textures look weird it is probably the lighting. In Unity I clicked on the character then set the shader to Unlit/Texture to fix the patchy look
-
-To set up a new Marker in Vuforia
-
-Log in to Vuforia Target Manager
-https://developer.vuforia.com/target-manager
-
-Got to database called artree
-
-Either 'add target' or use existing one
-
-Click on 'Download Database' 
-
-Select 'Unity' as your development platform and click 'Download'
-
-File comes down as a Unity package.
-
-Then basically you can follow this guide:
-http://www.dannygoodayle.com/2013/03/01/making-your-first-project-with-unity-and-augmented-reality/
-
-To use the motion packs from Unity follow this guide:
-
-https://community.mixamo.com/hc/en-us/articles/203738103-Tutorial-Mixamo-and-Unity-Motion-Packs
-
-Access:
-
-Email me for Vuforia and Mixamo passwords.
-
-Notes:
-
-Aims for ideal workflow will be added in Wiki
