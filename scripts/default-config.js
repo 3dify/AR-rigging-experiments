@@ -1,6 +1,7 @@
 module.exports = {
 	basePath: '../',
-	unityModelsPath : 'Assets/Models',
+	unityModelPath : 'Models',
+	unityAssetPath : 'Assets',
 	unityExecutablePath: "/Applications/Unity 4.6/Unity.app/Contents/MacOS/Unity",
 	unityLogPath: 'logs/unityLog.txt',
 	unityProjectPath: './',

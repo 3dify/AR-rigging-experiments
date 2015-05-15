@@ -3,12 +3,12 @@
 unset PYTHONPATH
 
 USER_DIR=$(pwd)
-BLENDER=/Applications/blender.app/Contents/MacOS/
+BLENDER=/Applications/Blender/Blender.app/Contents/MacOS/
 
 
-BLENDER_SYSTEM_PYTHON=/Applications/blender.app/Contents/Resources/2.74/python
-BLENDER_SYSTEM_SCRIPTS=/Applications/Blender/blender.app/Contents/Resources/2.74/scripts
-BLENDER_SYSTEM_DATAFILES=/Applications/Blender/blender.app/Contents/Resources/2.74/datafiles
+BLENDER_SYSTEM_PYTHON=/Applications/Blender/Blender.app/Contents/Resources/2.74/python
+BLENDER_SYSTEM_SCRIPTS=/Applications/Blender/Blender.app/Contents/Resources/2.74/scripts
+BLENDER_SYSTEM_DATAFILES=/Applications/Blender/Blender.app/Contents/Resources/2.74/datafiles
 
 $BLENDER/blender "$@"
 

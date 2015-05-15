@@ -28,16 +28,17 @@ obj_list = [item for item in file_list if item[-4:] == '.obj']
 for item in obj_list:
     number = item[5:-4]
     print("item: " + item + ", number: "+ item)
+    name = item[:-4]
     full_path_to_file = os.path.join(model_path, item)
     bpy.ops.import_scene.obj(filepath=full_path_to_file)
-    obj = bpy.data.objects['model']
+    obj = bpy.data.objects[name]
 
     #smooth those normals
     bpy.ops.object.shade_smooth()
     
     mod = obj.modifiers.new(name='decimate', type='DECIMATE')
     mod.decimate_type='COLLAPSE'
-    mod.ratio =  min( 1.0 * tris / len(bpy.data.meshes['model'].polygons), 1)
+    mod.ratio =  min( 1.0 * tris / len(bpy.data.meshes[name].polygons), 1)
     print("reducing by ratio: {0}".format(mod.ratio));
     bpy.context.scene.objects.active = obj
     bpy.ops.object.modifier_apply(modifier='decimate')

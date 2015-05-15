@@ -14,7 +14,7 @@ require('./rfc1123.js');
 
 var config = require('./config.js');
 
-var expectedArgs = 3;
+var expectedArgs = 4;
 var cwd = process.cwd();
 var basePath = path.normalize(path.join(__dirname,config.basePath));
 var scriptsPath = path.normalize(__dirname);
@@ -31,6 +31,8 @@ if( process.argv[0] != 'node' )
 {
 	expectedArgs--;
 }
+
+
 
 if( process.argv.length != expectedArgs ){
 	exitWithError("missing arguments\nusage: main.js {asset_dir} {output_dir}");
@@ -65,6 +67,8 @@ var imagesLeftToSave=0;
 pngFiles.forEach(function(imageFile){
 	outFile = path.join(outputDir,imageFile.substr(0,imageFile.length-4)+".jpg");
 	imagesLeftToSave++;
+	
+	console.log("==>>"+path.join(assetDir,imageFile));
 	//writeFileSync(outFile,gm(path.join(assetDir,imageFile)).compress('JPEG').quality(config.textureQuality).toBuffer());
 	gm(path.join(assetDir,imageFile)).compress('JPEG').thumb(config.textureSize,config.textureSize,outFile,config.textureQuality,function(err){
 		if(err)exitWithError('failed to save '+outFile);
@@ -95,7 +99,7 @@ var decimateArgs = [
 	Number(config.numOfPolys).toString()
 ];
 
-console.log("executing decimate:\n"+decimateCmd);
+console.log("executing decimate:\n"+decimateCmd+" "+decimateArgs.join(" "));
 child = child_process.spawnSync(decimateCmd,decimateArgs);
 
 if(child.status>0){	
@@ -134,7 +138,7 @@ var waitForSave=setInterval(function(){
 var saveZipAndUpload = function(){
 	//Create zip file
 	console.log('creating zip file');
-	var zipFile = assetName+"-"+(new Date().toISOString())+".zip";
+	var zipFile = assetName+"-"+(new Date().rfc1123())+".zip";
 	var zipFilePath = path.join(cwd,zipFile);
 	var remoteZipFile = md5(zipFile);
 	var remoteZipPath = path.join(config.ftp.path,remoteZipFile);
