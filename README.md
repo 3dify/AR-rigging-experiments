@@ -6,11 +6,27 @@ Blender 2.7.x
 
 ## Setup 
 
-First install the required node packages.
+Install Homebrew (on Mac)
+```
+ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+```
+
+Install node via packages: https://nodejs.org/download/
+
+Install imagemagick and graphicsmagick
+
+```
+brew install imagemagick
+brew install graphicsmagick
+```
+
+Install the required node packages. CD into directory where repository is downloaded and then..
 
 ```
 npm install
 ```
+
+
 
 Then make a copy of default-config.js.
 
