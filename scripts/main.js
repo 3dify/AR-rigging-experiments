@@ -10,7 +10,6 @@ var qr = require('qr-image');
 var ftp = require('ftp');
 var request = require('sync-request');
 var crypto = require('crypto');
-require('./rfc1123.js');
 
 var config = require('./config.js');
 
@@ -41,8 +40,8 @@ if( process.argv.length != expectedArgs ){
 
 var assetDir = path.normalize(process.argv[2]);
 var assetName = path.basename(assetDir);
-var outputDir = path.join(cwd,assetName);
-
+var outputParent = path.join(cwd, path.normalize(process.argv[3]) );
+var outputDir = path.join(cwd, path.normalize(process.argv[3]), assetName );
 //Load json config file
 
 
@@ -138,8 +137,10 @@ var waitForSave=setInterval(function(){
 var saveZipAndUpload = function(){
 	//Create zip file
 	console.log('creating zip file');
-	var zipFile = assetName+"-"+(new Date().rfc1123())+".zip";
-	var zipFilePath = path.join(cwd,zipFile);
+	var d = new Date();
+	var timestamp = [d.getFullYear(),d.getMonth(),d.getDate(),d.getHours(),d.getMinutes(),d.getSeconds()].join('');
+	var zipFile = assetName+"-"+(timestamp)+".zip";
+	var zipFilePath = path.join(outputParent,zipFile);
 	var remoteZipFile = md5(zipFile);
 	var remoteZipPath = path.join(config.ftp.path,remoteZipFile);
 	var zipFileUrl = 'http://3dify.co.uk/scans/'+remoteZipFile;
@@ -154,7 +155,7 @@ var saveZipAndUpload = function(){
 	zip.writeZip(zipFilePath);
 	*/
 
-	child = child_process.spawnSync('zip',['-r',zipFilePath,assetName]);
+	child = child_process.spawnSync('zip',['-rj',zipFilePath,outputDir]);
 	
 	if(child.status>0){
 		exitWithError(child.stderr.toString());
@@ -174,7 +175,7 @@ var saveZipAndUpload = function(){
 	ftpConnection.connect(config.ftp);
 
 	//Generate QR Code
-	var qrImagePath = path.join(cwd,assetName+".png");
+	var qrImagePath = path.join(outputParent,assetName+".png");
 	console.log('creating qr code');
 	var qrPng = qr.imageSync(zipFileUrl, { type: 'png' });
 	fs.writeFileSync(qrImagePath,qrPng);
@@ -184,6 +185,9 @@ var saveZipAndUpload = function(){
 		exitWithError(child.stderr.toString());
 	}
 
+	console.log(zipFileUrl+" copied to clipboard");
+	child = child_process.execSync('echo "'+zipFileUrl+'" | pbcopy');
+
 	//Submit QR Code to Vuforia
 
 	var postData  = JSON.stringify({
@@ -191,31 +195,37 @@ var saveZipAndUpload = function(){
 		width : 1,
 		image : fs.readFileSync(qrImagePath).toString('base64')
 	});
-	var date = new Date().rfc1123();
+	var date = new Date().toUTCString();
 	var shaSum = crypto.createHmac('sha1',config.vuforia.secretKey);
 	shaSum.update("POST\n"+postData+"\napplication/json\n"+date+"\n/targets");
 	
 
 	var options = {
-	  hostname: 'https://vws.vuforia.com/targets',
+	  hostname: 'https://vws.vuforia.com',
 	  port: 80,
-	  path: '/upload',
+	  path: '/targets',
 	  method: 'POST',
 	  headers: {
 	    'Content-Type': 'application/json',
 	    'Content-Length': postData.length,
-	    'Date' : date,
+	    'date' : date,
 		'Authorization' : "VWS "+config.vuforia.accessKey+":"+shaSum.digest('base64')
 	  },
 	  body: postData
 	};
 
-	var res = request('POST', 'http://example.com');
-	console.log(res );
-	console.log( res.getBody() );
+	var res = request('POST', 'https://vws.vuforia.com/targets', options);
 	
+	if( res.statusCode != 200 ){
+		console.log("---------------------------");
+		console.log("Vuforia Target Upload Failed!!");
+		var info = JSON.parse( res.body.toString() );
+		console.log("Reason :"+info["result_code"]);
+		console.log("---------------------------");
+		return;
+	}
 
-	console.log(zipFileUrl);
+
 }
 
 

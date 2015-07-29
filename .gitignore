@@ -44,3 +44,5 @@ scripts/config.js
 *.bin
 
 logs/[^.]*
+
+tests
