@@ -9,7 +9,29 @@ var md5 = require('MD5');
 var qr = require('qr-image');
 var ftp = require('ftp');
 var request = require('sync-request');
-var crypto = require('crypto');
+var crypto = require('crypto-md5');
+
+
+// REWORK HERE
+
+// load module
+var vuforia = require('vuforiajs');
+
+// init client with valid credentials
+var client = vuforia.client({
+
+    // provision_access_key
+    'accessKey': '82fbdd38486d11e9cdcfa1db5ce1c16a0f88a63c',
+
+    // server_secret_key
+    'secretKey': '0ec60fbfe5e60f731baa402d31d32c1700d40f00'
+});
+
+// util for base64 encoding and decoding
+var util = vuforia.util();
+
+
+// END REWORK
 
 var config = require('./config.js');
 
@@ -190,40 +212,57 @@ var saveZipAndUpload = function(){
 
 	//Submit QR Code to Vuforia
 
-	var postData  = JSON.stringify({
-		name : assetName,
-		width : 1,
-		image : fs.readFileSync(qrImagePath).toString('base64')
-	});
-	var date = new Date().toUTCString();
-	var shaSum = crypto.createHmac('sha1',config.vuforia.secretKey);
-	shaSum.update("POST\n"+postData+"\napplication/json\n"+date+"\n/targets");
+
+
+//REWORK
+console.log(qrImagePath);
+
+var target = {
+
+    // name of the target, unique within a database
+    'name': remoteZipFile,
+    // width of the target in scene unit
+    'width': 1,
+    // the base64 encoded binary recognition image data
+    'image': util.encodeFileBase64(qrImagePath),
+    // indicates whether or not the target is active for query
+    'active_flag': true,
+    // the base64 encoded application metadata associated with the target
+    'application_metadata': util.encodeBase64(assetName)
+};
+
+// END REWORK
+
+
+client.addTarget(target, function (error, result) {
+
+    if (error) { // e.g. [Error: AuthenticationFailure]
+
+        console.error(result);
+        /* result would look like
+         {
+            result_code: 'AuthenticationFailure',
+            transaction_id: '58b51ddc7a2c4ac58d405027acf5f99a'
+         }
+         */
+
+    } else {
+
+        console.log(result);
+        /* result will look like
+         {
+            target_id: '93fd6681f1r74b76bg80tf736a11b6a9',
+            result_code: 'TargetCreated',
+            transaction_id: 'xf157g63179641c4920728f1650d1626'
+         }
+         */
+    }
+});
+
+
 	
 
-	var options = {
-	  hostname: 'https://vws.vuforia.com',
-	  port: 80,
-	  path: '/targets',
-	  method: 'POST',
-	  headers: {
-	    'Content-Type': 'application/json',
-	    'Content-Length': postData.length,
-	    'date' : date,
-		'Authorization' : "VWS "+config.vuforia.accessKey+":"+shaSum.digest('base64')
-	  },
-	  body: postData
-	};
-
-	var res = request('POST', 'https://vws.vuforia.com/targets', options);
 	
-	if( res.statusCode != 200 ){
-		console.log("---------------------------");
-		console.log("Vuforia Target Upload Failed!!");
-		var info = JSON.parse( res.body.toString() );
-		console.log("Reason :"+info["result_code"]);
-		console.log("---------------------------");
-		return;
-	}
 
 
 }
