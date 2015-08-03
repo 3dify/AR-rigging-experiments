@@ -2,7 +2,7 @@
 
 ## Requires 
 Unity 4.6.x
-note: Unity 4.6.1 causes a black screen on some devices (known bug. Unity updated to 4.6.7f1 and it fixed the issue
+note: Unity 4.6.1 causes a black screen on some devices (known bug). Unity updated to 4.6.7f1 and it fixed the issue
 
 Blender 2.7.x
 
