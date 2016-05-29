@@ -4,7 +4,7 @@
 Unity 4.6.x
 note: Unity 4.6.1 causes a black screen on some devices (known bug). Unity updated to 4.6.7f1 and it fixed the issue
 
-Blender 2.7.x
+Blender 2.7.4 * http://download.blender.org/release/Blender2.74/ *
 
 ## Setup 
 
@@ -38,7 +38,7 @@ Then make a copy of default-config.js.
 cp scripts/default-config.js scripts/config.js
 ```
 
-Then modify scripts/config.js to have valid Unity 3d, and Blender path, as well as authorization credencials for Vuforia and FTP.
+Then modify scripts/config.js to have valid Unity 3d, and Blender path, as well as authorization credencials for Vuforia and FTP. Vuforia is using ARtree.
 
 ## Running
 
