@@ -15,6 +15,8 @@ ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/
 
 Install node via packages: https://nodejs.org/download/
 
+* MAKE SURE THIS IS VERSION 0.12 - download here: https://nodejs.org/en/blog/release/v0.12.0/ *
+
 Install imagemagick and graphicsmagick
 
 ```
